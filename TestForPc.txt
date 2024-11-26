@@ -1,0 +1,220 @@
+-- Script da GUI
+local ScreenGui = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+
+-- Propriedades do ScreenGui
+ScreenGui.Name = "AutoFarmGui"
+ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+-- Propriedades do Frame
+Frame.Parent = ScreenGui
+Frame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Frame.Position = UDim2.new(0.5, -150, 0.5, -100)
+Frame.Size = UDim2.new(0, 300, 0, 600)
+Frame.Active = true
+Frame.Draggable = true
+
+-- Função para criar Labels e Botões
+local function createButton(labelText, buttonText, position, clickFunction)
+    local Label = Instance.new("TextLabel")
+    Label.Parent = Frame
+    Label.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    Label.Position = position
+    Label.Size = UDim2.new(0.4, 0, 0.1, 0)
+    Label.Font = Enum.Font.SourceSans
+    Label.Text = labelText
+    Label.TextColor3 = Color3.fromRGB(0, 0, 0)
+    Label.TextScaled = true
+
+    local Button = Instance.new("TextButton")
+    Button.Parent = Frame
+    Button.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
+    Button.Position = UDim2.new(position.X.Scale + 0.45, position.X.Offset, position.Y.Scale, position.Y.Offset)
+    Button.Size = UDim2.new(0.4, 0, 0.1, 0)
+    Button.Font = Enum.Font.SourceSans
+    Button.Text = buttonText
+    Button.TextColor3 = Color3.fromRGB(255, 255, 255)
+    Button.TextScaled = true
+    Button.MouseButton1Click:Connect(clickFunction)
+
+    return Button
+end
+
+-- Criar botões e labels
+local AutoCollectDropsButton = createButton("Auto Click To Collect", "Desativado", UDim2.new(0.05, 0, 0.05, 0), function()
+    _G.autoCollect = not _G.autoCollect
+    if _G.autoCollect then
+        AutoCollectDropsButton.Text = "Ativado"
+    else
+        AutoCollectDropsButton.Text = "Desativado"
+    end
+end)
+
+local AutoTpButton = createButton("Auto Teleport", "Desativado", UDim2.new(0.05, 0, 0.20, 0), function()
+    _G.autoTeleport = not _G.autoTeleport
+    if _G.autoTeleport then
+        AutoTpButton.Text = "Ativado"
+    else
+        AutoTpButton.Text = "Desativado"
+    end
+end)
+
+local AutoFarmDesertButton = createButton("AutoFarm Desert", "Desativado", UDim2.new(0.05, 0, 0.35, 0), function()
+    _G.autoFarmDesert = not _G.autoFarmDesert
+    if _G.autoFarmDesert then
+        AutoFarmDesertButton.Text = "Ativado"
+    else
+        AutoFarmDesertButton.Text = "Desativado"
+    end
+end)
+
+local AutoFarmVolcanoButton = createButton("AutoFarm Volcano", "Desativado", UDim2.new(0.05, 0, 0.50, 0), function()
+    _G.autoFarmVolcano = not _G.autoFarmVolcano
+    if _G.autoFarmVolcano then
+        AutoFarmVolcanoButton.Text = "Ativado"
+    else
+        AutoFarmVolcanoButton.Text = "Desativado"
+    end
+end)
+
+local AutoFarmSnowButton = createButton("AutoFarm Snow", "Desativado", UDim2.new(0.05, 0, 0.65, 0), function()
+    _G.autoFarmSnow = not _G.autoFarmSnow
+    if _G.autoFarmSnow then
+        AutoFarmSnowButton.Text = "Ativado"
+    else
+        AutoFarmSnowButton.Text = "Desativado"
+    end
+end)
+
+-- Script de Auto Click To Collect
+function proxi()
+    spawn(function()
+        for _, pro in ipairs(workspace:GetDescendants()) do
+            if pro:IsA("ProximityPrompt") then
+                fireproximityprompt(pro)
+            end
+        end
+    end)
+end
+
+-- Loop do Auto Click To Collect
+spawn(function()
+    while wait(0.1) do
+        if _G.autoCollect then
+            proxi()
+        end
+    end
+end)
+
+-- Script de Auto Teleport
+local positions = {
+    Vector3.new(2661, 16, 73),
+    Vector3.new(2507, 16, -352),
+    Vector3.new(2381, 16, -617),
+    Vector3.new(2454, 23, -685),
+    Vector3.new(2191, 16, -966),
+    Vector3.new(2494, 16, -1055),
+    Vector3.new(2801, 23, -243),
+    Vector3.new(2909, 16, -899),
+    Vector3.new(2983, 16, -1149),
+    Vector3.new(3148, 16, -744),
+    Vector3.new(3114, 22, -533),
+    Vector3.new(3235, 16, -657),
+    Vector3.new(3428, 16, -928),
+    Vector3.new(4101, 16, -1202),
+    Vector3.new(4029, 16, -873),
+    Vector3.new(3970, 16, -776),
+    Vector3.new(3788, 16, -861),
+    Vector3.new(3903, 16, -379),
+    Vector3.new(3670, 16, -446),
+    Vector3.new(3553, 16, -439),
+    Vector3.new(3908, 16, -380),
+    Vector3.new(3397, 23, -88),
+    Vector3.new(3711, 16, -92),
+    Vector3.new(3971, 16, 85),
+    Vector3.new(3650, 16, 147),
+    Vector3.new(3710, 16, -93),
+    Vector3.new(3774, 25, 533),
+    Vector3.new(2917, 28, 498),
+    Vector3.new(2497, 22, -125),
+    Vector3.new(2491, 16, 107),
+    Vector3.new(2231, 16, 68),
+    Vector3.new(2522, 16, 197),
+    Vector3.new(2282, 16, 509),
+    Vector3.new(2228, 16, 486),
+    Vector3.new(2746, 17, 35),
+    Vector3.new(2708, 17, 73),
+    Vector3.new(2747, 17, 102),
+    Vector3.new(2775, 17, 72),
+    Vector3.new(3322, 16, -420),
+    Vector3.new(3355, 16, -441),
+    Vector3.new(3331, 16, -480),
+    Vector3.new(3288, 16, -453),
+    Vector3.new(3070, 18, -259),
+    Vector3.new(2230, 16, 70),
+    Vector3.new(3053, 18, -102)
+}
+
+-- Função de Auto Teleport
+function autoTeleport()
+    while _G.autoTeleport do
+        for _, pos in ipairs(positions) do
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(pos)
+            wait(0.1)
+        end
+    end
+end
+
+-- Loop do Auto Teleport
+spawn(function()
+    while wait(0.1) do
+        if _G.autoTeleport then
+            autoTeleport()
+        end
+    end
+end)
+
+-- Script de Auto Fishing para múltiplas instâncias utilizando LocalPlayer
+
+-- Referência ao jogador local
+local player = game.Players.LocalPlayer
+
+-- AutoFarm Desert
+spawn(function()
+    while wait(0.1) do
+        if _G.autoFarmDesert then
+            player.Character.Fishing.Desert.RemoteEvent:FireServer("Fishing1")
+            player.Character.Fishing.Desert.RemoteEvent:FireServer("Fishing2")
+            player.Character.Fishing.Desert.RemoteEvent:FireServer("Fishing3")
+            player.Character.Fishing.Desert.RemoteEvent:FireServer("Fishing4")
+            player.Character.Fishing.Desert.RemoteEvent:FireServer("Fishing5")
+        end
+    end
+end)
+
+-- AutoFarm Volcano
+spawn(function()
+    while wait(0.1) do
+        if _G.autoFarmVolcano then
+            player.Character.Fishing.Lava.RemoteEvent:FireServer("Fishing1")
+            player.Character.Fishing.Lava.RemoteEvent:FireServer("Fishing2")
+            player.Character.Fishing.Lava.RemoteEvent:FireServer("Fishing3")
+            player.Character.Fishing.Lava.RemoteEvent:FireServer("Fishing4")
+            player.Character.Fishing.Lava.RemoteEvent:FireServer("Fishing5")
+        end
+    end
+end)
+
+-- AutoFarm Snow
+spawn(function()
+    while wait(0.1) do
+        if _G.autoFarmSnow then
+            player.Character.Fishing.Snow.RemoteEvent:FireServer("Fishing1")
+            player.Character.Fishing.Snow.RemoteEvent:FireServer("Fishing2")
+            player.Character.Fishing.Snow.RemoteEvent:FireServer("Fishing3")
+            player.Character.Fishing.Snow.RemoteEvent:FireServer("Fishing4")
+            player.Character.Fishing.Snow.RemoteEvent:FireServer("Fishing5")
+        end
+    end
+end)
+
