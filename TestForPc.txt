@@ -1,92 +1,291 @@
 -- Script da GUI
+local player = game.Players.LocalPlayer
 local ScreenGui = Instance.new("ScreenGui")
-local Frame = Instance.new("Frame")
+local MainFrame = Instance.new("Frame")
+local TitleBar = Instance.new("Frame")
+local Title = Instance.new("TextLabel")
+local MinimizeButton = Instance.new("TextButton")
+local CloseButton = Instance.new("TextButton")
 
 -- Propriedades do ScreenGui
-ScreenGui.Name = "AutoFarmGui"
-ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+ScreenGui.Name = "ZxHub"
+ScreenGui.Parent = player:WaitForChild("PlayerGui")
 
--- Propriedades do Frame
-Frame.Parent = ScreenGui
-Frame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-Frame.Position = UDim2.new(0.5, -150, 0.5, -100)
-Frame.Size = UDim2.new(0, 300, 0, 600)
-Frame.Active = true
-Frame.Draggable = true
+-- Propriedades do MainFrame
+MainFrame.Parent = ScreenGui
+MainFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+MainFrame.Position = UDim2.new(0.3, 0, 0.3, 0)
+MainFrame.Size = UDim2.new(0, 400, 0, 600)
+MainFrame.Active = true
+MainFrame.Draggable = true
 
--- Função para criar Labels e Botões
-local function createButton(labelText, buttonText, position, clickFunction)
-    local Label = Instance.new("TextLabel")
-    Label.Parent = Frame
-    Label.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-    Label.Position = position
-    Label.Size = UDim2.new(0.4, 0, 0.1, 0)
-    Label.Font = Enum.Font.SourceSans
-    Label.Text = labelText
-    Label.TextColor3 = Color3.fromRGB(0, 0, 0)
-    Label.TextScaled = true
+-- Propriedades do TitleBar
+TitleBar.Parent = MainFrame
+TitleBar.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+TitleBar.Size = UDim2.new(1, 0, 0, 30)
 
-    local Button = Instance.new("TextButton")
-    Button.Parent = Frame
-    Button.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
-    Button.Position = UDim2.new(position.X.Scale + 0.45, position.X.Offset, position.Y.Scale, position.Y.Offset)
-    Button.Size = UDim2.new(0.4, 0, 0.1, 0)
-    Button.Font = Enum.Font.SourceSans
-    Button.Text = buttonText
-    Button.TextColor3 = Color3.fromRGB(255, 255, 255)
-    Button.TextScaled = true
-    Button.MouseButton1Click:Connect(clickFunction)
+-- Propriedades do Title
+Title.Parent = TitleBar
+Title.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+Title.Size = UDim2.new(0.9, 0, 1, 0)
+Title.Font = Enum.Font.SourceSans
+Title.Text = "ZxHub"
+Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+Title.TextScaled = true
 
-    return Button
-end
+-- Propriedades do MinimizeButton
+MinimizeButton.Parent = TitleBar
+MinimizeButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+MinimizeButton.Position = UDim2.new(0.8, 0, 0, 0)
+MinimizeButton.Size = UDim2.new(0.1, 0, 1, 0)
+MinimizeButton.Font = Enum.Font.SourceSans
+MinimizeButton.Text = "-"
+MinimizeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+MinimizeButton.TextScaled = true
+MinimizeButton.MouseButton1Click:Connect(function()
+    MainFrame.Visible = false
+    MinimizedFrame.Visible = true
+end)
 
--- Criar botões e labels
-local AutoCollectDropsButton = createButton("Auto Click To Collect", "Desativado", UDim2.new(0.05, 0, 0.05, 0), function()
-    _G.autoCollect = not _G.autoCollect
-    if _G.autoCollect then
-        AutoCollectDropsButton.Text = "Ativado"
+-- Propriedades do CloseButton
+CloseButton.Parent = TitleBar
+CloseButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+CloseButton.Position = UDim2.new(0.9, 0, 0, 0)
+CloseButton.Size = UDim2.new(0.1, 0, 1, 0)
+CloseButton.Font = Enum.Font.SourceSans
+CloseButton.Text = "X"
+CloseButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+CloseButton.TextScaled = true
+CloseButton.MouseButton1Click:Connect(function()
+    ScreenGui:Destroy()
+end)
+
+-- Frame Minimizado
+local MinimizedFrame = Instance.new("Frame")
+MinimizedFrame.Parent = ScreenGui
+MinimizedFrame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+MinimizedFrame.Position = UDim2.new(0.3, 0, 0.3, 0)
+MinimizedFrame.Size = UDim2.new(0, 100, 0, 50)
+MinimizedFrame.Visible = false
+
+local MinimizedButton = Instance.new("TextButton")
+MinimizedButton.Parent = MinimizedFrame
+MinimizedButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+MinimizedButton.Size = UDim2.new(1, 0, 1, 0)
+MinimizedButton.Font = Enum.Font.SourceSans
+MinimizedButton.Text = "ZxHub"
+MinimizedButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+MinimizedButton.TextScaled = true
+MinimizedButton.MouseButton1Click:Connect(function()
+    MainFrame.Visible = true
+    MinimizedFrame.Visible = false
+end)
+
+-- Botões de Navegação
+local AutoFarmButton = Instance.new("TextButton")
+AutoFarmButton.Parent = MainFrame
+AutoFarmButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+AutoFarmButton.Position = UDim2.new(0.05, 0, 0.1, 0)
+AutoFarmButton.Size = UDim2.new(0.4, 0, 0.05, 0)
+AutoFarmButton.Font = Enum.Font.SourceSans
+AutoFarmButton.Text = "AutoFarm"
+AutoFarmButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+AutoFarmButton.TextScaled = true
+
+local AutoFishButton = Instance.new("TextButton")
+AutoFishButton.Parent = MainFrame
+AutoFishButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+AutoFishButton.Position = UDim2.new(0.05, 0, 0.2, 0)
+AutoFishButton.Size = UDim2.new(0.4, 0, 0.05, 0)
+AutoFishButton.Font = Enum.Font.SourceSans
+AutoFishButton.Text = "AutoFish"
+AutoFishButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+AutoFishButton.TextScaled = true
+
+local AutoTeleportButton = Instance.new("TextButton")
+AutoTeleportButton.Parent = MainFrame
+AutoTeleportButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+AutoTeleportButton.Position = UDim2.new(0.05, 0, 0.3, 0)
+AutoTeleportButton.Size = UDim2.new(0.4, 0, 0.05, 0)
+AutoTeleportButton.Font = Enum.Font.SourceSans
+AutoTeleportButton.Text = "AutoTeleport (Next Update)"
+AutoTeleportButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+AutoTeleportButton.TextScaled = true
+
+local CreditsButton = Instance.new("TextButton")
+CreditsButton.Parent = MainFrame
+CreditsButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+CreditsButton.Position = UDim2.new(0.05, 0, 0.4, 0)
+CreditsButton.Size = UDim2.new(0.4, 0, 0.05, 0)
+CreditsButton.Font = Enum.Font.SourceSans
+CreditsButton.Text = "Credits"
+CreditsButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+CreditsButton.TextScaled = true
+
+-- Função para AutoFarm
+local AutoFarmFrame = Instance.new("Frame")
+AutoFarmFrame.Parent = MainFrame
+AutoFarmFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+AutoFarmFrame.Position = UDim2.new(0.5, 0, 0.1, 0)
+AutoFarmFrame.Size = UDim2.new(0.4, 0, 0.2, 0)
+AutoFarmFrame.Visible = false
+
+local AutoFarmLabel = Instance.new("TextLabel")
+AutoFarmLabel.Parent = AutoFarmFrame
+AutoFarmLabel.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+AutoFarmLabel.Position = UDim2.new(0, 0, 0, 0)
+AutoFarmLabel.Size = UDim2.new(1, 0, 0.2, 0)
+AutoFarmLabel.Font = Enum.Font.SourceSans
+AutoFarmLabel.Text = "AutoFarm Options"
+AutoFarmLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+AutoFarmLabel.TextScaled = true
+
+local AutoFarmChestButton = Instance.new("TextButton")
+AutoFarmChestButton.Parent = AutoFarmFrame
+AutoFarmChestButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+AutoFarmChestButton.Position = UDim2.new(0, 0, 0.3, 0)
+AutoFarmChestButton.Size = UDim2.new(0.9, 0, 0.3, 0)
+AutoFarmChestButton.Font = Enum.Font.SourceSans
+AutoFarmChestButton.Text = "AutoFarmChest [ ]"
+AutoFarmChestButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+AutoFarmChestButton.TextScaled = true
+AutoFarmChestButton.MouseButton1Click:Connect(function()
+    _G.autoFarmChest = not _G.auto
+    _G.autoFarmChest = not _G.autoFarmChest
+    if _G.autoFarmChest then
+        AutoFarmChestButton.Text = "AutoFarmChest [X]"
+        AutoFarmChestButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
     else
-        AutoCollectDropsButton.Text = "Desativado"
+        AutoFarmChestButton.Text = "AutoFarmChest [ ]"
+        AutoFarmChestButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
     end
 end)
 
-local AutoTpButton = createButton("Auto Teleport", "Desativado", UDim2.new(0.05, 0, 0.20, 0), function()
-    _G.autoTeleport = not _G.autoTeleport
-    if _G.autoTeleport then
-        AutoTpButton.Text = "Ativado"
+local AutoCollectDropsButton = Instance.new("TextButton")
+AutoCollectDropsButton.Parent = AutoFarmFrame
+AutoCollectDropsButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+AutoCollectDropsButton.Position = UDim2.new(0, 0, 0.6, 0)
+AutoCollectDropsButton.Size = UDim2.new(0.9, 0, 0.3, 0)
+AutoCollectDropsButton.Font = Enum.Font.SourceSans
+AutoCollectDropsButton.Text = "AutoCollectDrops [ ]"
+AutoCollectDropsButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+AutoCollectDropsButton.TextScaled = true
+AutoCollectDropsButton.MouseButton1Click:Connect(function()
+    _G.autoCollectDrops = not _G.autoCollectDrops
+    if _G.autoCollectDrops then
+        AutoCollectDropsButton.Text = "AutoCollectDrops [X]"
+        AutoCollectDropsButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
     else
-        AutoTpButton.Text = "Desativado"
+        AutoCollectDropsButton.Text = "AutoCollectDrops [ ]"
+        AutoCollectDropsButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
     end
 end)
 
-local AutoFarmDesertButton = createButton("AutoFarm Desert", "Desativado", UDim2.new(0.05, 0, 0.35, 0), function()
-    _G.autoFarmDesert = not _G.autoFarmDesert
-    if _G.autoFarmDesert then
-        AutoFarmDesertButton.Text = "Ativado"
+AutoFarmButton.MouseButton1Click:Connect(function()
+    AutoFarmFrame.Visible = not AutoFarmFrame.Visible
+end)
+
+-- Função para AutoFish
+local AutoFishFrame = Instance.new("Frame")
+AutoFishFrame.Parent = MainFrame
+AutoFishFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+AutoFishFrame.Position = UDim2.new(0.5, 0, 0.3, 0)
+AutoFishFrame.Size = UDim2.new(0.4, 0, 0.15, 0)
+AutoFishFrame.Visible = false
+
+local AutoFishLabel = Instance.new("TextLabel")
+AutoFishLabel.Parent = AutoFishFrame
+AutoFishLabel.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+AutoFishLabel.Position = UDim2.new(0, 0, 0, 0)
+AutoFishLabel.Size = UDim2.new(1, 0, 0.3, 0)
+AutoFishLabel.Font = Enum.Font.SourceSans
+AutoFishLabel.Text = "AutoFish Options"
+AutoFishLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+AutoFishLabel.TextScaled = true
+
+local AutoFishOptionButton = Instance.new("TextButton")
+AutoFishOptionButton.Parent = AutoFishFrame
+AutoFishOptionButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+AutoFishOptionButton.Position = UDim2.new(0, 0, 0.5, 0)
+AutoFishOptionButton.Size = UDim2.new(0.9, 0, 0.4, 0)
+AutoFishOptionButton.Font = Enum.Font.SourceSans
+AutoFishOptionButton.Text = "AutoFish [ ]"
+AutoFishOptionButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+AutoFishOptionButton.TextScaled = true
+AutoFishOptionButton.MouseButton1Click:Connect(function()
+    _G.autoFish = not _G.autoFish
+    if _G.autoFish then
+        AutoFishOptionButton.Text = "AutoFish [X]"
+        AutoFishOptionButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
     else
-        AutoFarmDesertButton.Text = "Desativado"
+        AutoFishOptionButton.Text = "AutoFish [ ]"
+        AutoFishOptionButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
     end
 end)
 
-local AutoFarmVolcanoButton = createButton("AutoFarm Volcano", "Desativado", UDim2.new(0.05, 0, 0.50, 0), function()
-    _G.autoFarmVolcano = not _G.autoFarmVolcano
-    if _G.autoFarmVolcano then
-        AutoFarmVolcanoButton.Text = "Ativado"
-    else
-        AutoFarmVolcanoButton.Text = "Desativado"
-    end
+AutoFishButton.MouseButton1Click:Connect(function()
+    AutoFishFrame.Visible = not AutoFishFrame.Visible
 end)
 
-local AutoFarmSnowButton = createButton("AutoFarm Snow", "Desativado", UDim2.new(0.05, 0, 0.65, 0), function()
-    _G.autoFarmSnow = not _G.autoFarmSnow
-    if _G.autoFarmSnow then
-        AutoFarmSnowButton.Text = "Ativado"
-    else
-        AutoFarmSnowButton.Text = "Desativado"
-    end
+-- Função para AutoTeleport (Next Update)
+AutoTeleportButton.MouseButton1Click:Connect(function()
+    -- Comentário informativo
+    print("Next Update will be released for AutoTeleport. It's being tested.")
 end)
 
--- Script de Auto Click To Collect
+-- Função para Credits
+local CreditsFrame = Instance.new("Frame")
+CreditsFrame.Parent = MainFrame
+CreditsFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+CreditsFrame.Position = UDim2.new(0.5, 0, 0.4, 0)
+CreditsFrame.Size = UDim2.new(0.4, 0, 0.25, 0)
+CreditsFrame.Visible = false
+
+local CreditsLabel = Instance.new("TextLabel")
+CreditsLabel.Parent = CreditsFrame
+CreditsLabel.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+CreditsLabel.Position = UDim2.new(0, 0, 0, 0)
+CreditsLabel.Size = UDim2.new(1, 0, 0.2, 0)
+CreditsLabel.Font = Enum.Font.SourceSans
+CreditsLabel.Text = "Credits"
+CreditsLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+CreditsLabel.TextScaled = true
+
+local LuanLabel = Instance.new("TextLabel")
+LuanLabel.Parent = CreditsFrame
+LuanLabel.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+LuanLabel.Position = UDim2.new(0, 0, 0.25, 0)
+LuanLabel.Size = UDim2.new(1, 0, 0.2, 0)
+LuanLabel.Font = Enum.Font.SourceSans
+LuanLabel.Text = "--Luan"
+LuanLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+LuanLabel.TextScaled = true
+
+local CarlosLabel = Instance.new("TextLabel")
+CarlosLabel.Parent = CreditsFrame
+CarlosLabel.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+CarlosLabel.Position = UDim2.new(0, 0, 0.5, 0)
+CarlosLabel.Size = UDim2.new(1, 0, 0.2, 0)
+CarlosLabel.Font = Enum.Font.SourceSans
+CarlosLabel.Text = "--Carlos"
+CarlosLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+CarlosLabel.TextScaled = true
+
+local KitsunLabel = Instance.new("TextLabel")
+KitsunLabel.Parent = CreditsFrame
+KitsunLabel.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+KitsunLabel.Position = UDim2.new(0, 0, 0.75, 0)
+KitsunLabel.Size = UDim2.new(1, 0, 0.2, 0)
+KitsunLabel.Font = Enum.Font.SourceSans
+KitsunLabel.Text = "--Kitsun"
+KitsunLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+KitsunLabel.TextScaled = true
+
+CreditsButton.MouseButton1Click:Connect(function()
+    CreditsFrame.Visible = not CreditsFrame.Visible
+end)
+
+-- Script de Auto Collect Drops
 function proxi()
     spawn(function()
         for _, pro in ipairs(workspace:GetDescendants()) do
@@ -97,87 +296,30 @@ function proxi()
     end)
 end
 
--- Loop do Auto Click To Collect
+-- Loop do Auto Collect Drops
 spawn(function()
     while wait(0.1) do
-        if _G.autoCollect then
+        if _G.autoCollectDrops then
             proxi()
         end
     end
 end)
 
--- Script de Auto Teleport
-local positions = {
-    Vector3.new(2661, 16, 73),
-    Vector3.new(2507, 16, -352),
-    Vector3.new(2381, 16, -617),
-    Vector3.new(2454, 23, -685),
-    Vector3.new(2191, 16, -966),
-    Vector3.new(2494, 16, -1055),
-    Vector3.new(2801, 23, -243),
-    Vector3.new(2909, 16, -899),
-    Vector3.new(2983, 16, -1149),
-    Vector3.new(3148, 16, -744),
-    Vector3.new(3114, 22, -533),
-    Vector3.new(3235, 16, -657),
-    Vector3.new(3428, 16, -928),
-    Vector3.new(4101, 16, -1202),
-    Vector3.new(4029, 16, -873),
-    Vector3.new(3970, 16, -776),
-    Vector3.new(3788, 16, -861),
-    Vector3.new(3903, 16, -379),
-    Vector3.new(3670, 16, -446),
-    Vector3.new(3553, 16, -439),
-    Vector3.new(3908, 16, -380),
-    Vector3.new(3397, 23, -88),
-    Vector3.new(3711, 16, -92),
-    Vector3.new(3971, 16, 85),
-    Vector3.new(3650, 16, 147),
-    Vector3.new(3710, 16, -93),
-    Vector3.new(3774, 25, 533),
-    Vector3.new(2917, 28, 498),
-    Vector3.new(2497, 22, -125),
-    Vector3.new(2491, 16, 107),
-    Vector3.new(2231, 16, 68),
-    Vector3.new(2522, 16, 197),
-    Vector3.new(2282, 16, 509),
-    Vector3.new(2228, 16, 486),
-    Vector3.new(2746, 17, 35),
-    Vector3.new(2708, 17, 73),
-    Vector3.new(2747, 17, 102),
-    Vector3.new(2775, 17, 72),
-    Vector3.new(3322, 16, -420),
-    Vector3.new(3355, 16, -441),
-    Vector3.new(3331, 16, -480),
-    Vector3.new(3288, 16, -453),
-    Vector3.new(3070, 18, -259),
-    Vector3.new(2230, 16, 70),
-    Vector3.new(3053, 18, -102)
-}
+-- Script de Auto Fishing para múltiplas instâncias utilizando LocalPlayer
+local player = game.Players.LocalPlayer
 
--- Função de Auto Teleport
-function autoTeleport()
-    while _G.autoTeleport do
-        for _, pos in ipairs(positions) do
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(pos)
-            wait(0.1)
-        end
-    end
-end
-
--- Loop do Auto Teleport
+-- AutoFarmChest
 spawn(function()
     while wait(0.1) do
-        if _G.autoTeleport then
-            autoTeleport()
+        if _G.autoFarmChest then
+            player.Character.Fishing.Desert.RemoteEvent:FireServer("Fishing1")
+            player.Character.Fishing.Desert.RemoteEvent:FireServer("Fishing2")
+            player.Character.Fishing.Desert.RemoteEvent:FireServer("Fishing3")
+            player.Character.Fishing.Desert.RemoteEvent:FireServer("Fishing4")
+            player.Character.Fishing.Desert.RemoteEvent:FireServer("Fishing5")
         end
     end
 end)
-
--- Script de Auto Fishing para múltiplas instâncias utilizando LocalPlayer
-
--- Referência ao jogador local
-local player = game.Players.LocalPlayer
 
 -- AutoFarm Desert
 spawn(function()
@@ -196,18 +338,19 @@ end)
 spawn(function()
     while wait(0.1) do
         if _G.autoFarmVolcano then
-            player.Character.Fishing.Lava.RemoteEvent:FireServer("Fishing1")
-            player.Character.Fishing.Lava.RemoteEvent:FireServer("Fishing2")
-            player.Character.Fishing.Lava.RemoteEvent:FireServer("Fishing3")
-            player.Character.Fishing.Lava.RemoteEvent:FireServer("Fishing4")
-            player.Character.Fishing.Lava.RemoteEvent:FireServer("Fishing5")
+            player.Character.Fishing.Volcano.RemoteEvent:FireServer("Fishing1")
+            player.Character.Fishing.Volcano.RemoteEvent:FireServer("Fishing2")
+            player.Character.Fishing.Volcano.RemoteEvent:FireServer("Fishing3")
+            player.Character.Fishing.Volcano.RemoteEvent:
+            player.Character.Fishing.Volcano.RemoteEvent:FireServer("Fishing4")
+            player.Character.Fishing.Volcano.RemoteEvent:FireServer("Fishing5")
         end
-    end
+    end)
 end)
 
 -- AutoFarm Snow
 spawn(function()
-    while wait(0.1) do
+    while wait(0.50) do
         if _G.autoFarmSnow then
             player.Character.Fishing.Snow.RemoteEvent:FireServer("Fishing1")
             player.Character.Fishing.Snow.RemoteEvent:FireServer("Fishing2")
@@ -215,6 +358,5 @@ spawn(function()
             player.Character.Fishing.Snow.RemoteEvent:FireServer("Fishing4")
             player.Character.Fishing.Snow.RemoteEvent:FireServer("Fishing5")
         end
-    end
+    end)
 end)
-
